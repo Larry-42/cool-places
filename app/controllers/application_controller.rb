@@ -63,5 +63,18 @@ class ApplicationController < Sinatra::Base
     session.clear
     "Successfully logged out"
   end
+  
+  get '/createplace' do
+    #TODO:  Change redirect location
+    if !logged_in?
+      redirect to '/login'
+    end
+    
+    erb :'/places/create'
+  end
+  
+  post '/createplace' do
+    #TODO:  Add place creation, validation functionality
+  end
 
 end
