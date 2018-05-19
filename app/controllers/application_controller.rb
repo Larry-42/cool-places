@@ -74,7 +74,28 @@ class ApplicationController < Sinatra::Base
   end
   
   post '/createplace' do
-    #TODO:  Add place creation, validation functionality
+    #TODO:  Change redirect location
+    if !logged_in?
+      redirect to '/login'
+    end
+    binding.pry
+    #Validation:  Make sure that none of the fields are empty
+    params[:place].each do |k, v|
+      if v.empty?
+        redirect to '/createplace'
+      end
+    end
+    #Validation:  Make sure that place is not named "deleted"
+    if params[:place][:name].downcase == "deleted"
+      redirect to '/createplace'
+    end
+    #TOOD:  Validation:  Make sure that place does not already exist
+    
+    #TODO:  Associate new place with current User
+    Place.create(params[:place])
+    
+    #TODO:  Validate to place show page
+    "Place successfully created"
   end
 
 end
