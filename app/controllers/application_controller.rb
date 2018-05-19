@@ -1,6 +1,10 @@
 class ApplicationController < Sinatra::Base
   
-  set :views, Proc.new { File.join(root, "../views/")}
+  configure do
+    set :views, Proc.new { File.join(root, "../views/")}
+    enable :sessions
+    set :session_secret, "the_color_of_infinity"
+  end
   
   get '/' do
     "Welcome to cool places!"
@@ -28,10 +32,21 @@ class ApplicationController < Sinatra::Base
       redirect to '/signup'
     end
   
-    User.create(params[:user])
+    session[:user_id] = User.create(params[:user]).id
     
-    #TODO: Set session, redirect to show places
+    #TODO: redirect to show places
     "Successfully signed up"
+  end
+  
+  get '/login' do
+    #TODO:  Redirect if already logged in
+    erb :login
+  end
+  
+  post '/login' do
+    binding.pry
+    #TODO:  Add validation
+    "Logged in"
   end
 
 end
