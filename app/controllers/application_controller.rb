@@ -66,7 +66,7 @@ class ApplicationController < Sinatra::Base
     "Successfully logged out"
   end
   
-  get '/createplace' don
+  get '/createplace' do
     if !logged_in?
       redirect to '/'
     end
