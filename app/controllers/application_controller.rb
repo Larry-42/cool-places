@@ -44,9 +44,14 @@ class ApplicationController < Sinatra::Base
   end
   
   post '/login' do
-    binding.pry
-    #TODO:  Add validation
-    "Logged in"
+    #TODO:  Redirect once logged in
+    user_login = User.find_by username: params[:username]
+    if user_login && user_login.authenticate(params[:password])
+      session[:user_id] = user_login.id
+      "Logged in"
+    else
+      "Failed to validate"
+    end
   end
 
 end
