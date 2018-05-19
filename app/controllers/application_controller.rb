@@ -11,10 +11,12 @@ class ApplicationController < Sinatra::Base
   end
   
   get '/' do
-    "Welcome to cool places!"
+    #TODO:  Add redirect if already logged in
+    erb :index
   end
   
   get '/signup' do
+    #TODO:  Add redirect if already logged in
     erb :signup
   end
   
@@ -64,10 +66,9 @@ class ApplicationController < Sinatra::Base
     "Successfully logged out"
   end
   
-  get '/createplace' do
-    #TODO:  Change redirect location
+  get '/createplace' don
     if !logged_in?
-      redirect to '/login'
+      redirect to '/'
     end
     
     erb :'/places/create'
@@ -76,7 +77,7 @@ class ApplicationController < Sinatra::Base
   post '/createplace' do
     #TODO:  Change redirect location
     if !logged_in?
-      redirect to '/login'
+      redirect to '/'
     end
     binding.pry
     #Validation:  Make sure that none of the fields are empty
