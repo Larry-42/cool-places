@@ -6,6 +6,10 @@ class ApplicationController < Sinatra::Base
     set :session_secret, "the_color_of_infinity"
   end
   
+  def logged_in?
+    !!session[:user_id]
+  end
+  
   get '/' do
     "Welcome to cool places!"
   end
@@ -44,7 +48,7 @@ class ApplicationController < Sinatra::Base
   end
   
   post '/login' do
-    #TODO:  Redirect once logged in
+    #TODO:  Redirect once logged in, validate if logged in
     user_login = User.find_by username: params[:username]
     if user_login && user_login.authenticate(params[:password])
       session[:user_id] = user_login.id
@@ -52,6 +56,12 @@ class ApplicationController < Sinatra::Base
     else
       "Failed to validate"
     end
+  end
+  
+  get '/logout' do
+    #TODO:  Add redirect, validate if logged in
+    session.clear
+    "Successfully logged out"
   end
 
 end
