@@ -75,6 +75,15 @@ class ApplicationController < Sinatra::Base
     erb :'/users/show'
   end
   
+  get '/places/:id/edit' do
+    @place = Place.find(params[:id])
+    if @place && logged_in? && @place.user_id == current_user.id
+      erb :'/places/edit'
+    else
+      redirect to "/places/#{params[:id]}"
+    end
+  end
+  
   get '/places/:id' do
     @is_logged_in = logged_in?
     @place = Place.find(params[:id])
