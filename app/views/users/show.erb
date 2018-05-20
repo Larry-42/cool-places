@@ -21,8 +21,12 @@
     <% @user.comments.each do |comment| %>
     <li>
       <%= @user.username %> commented on 
-      <a href= "<%= "/places/#{comment.place.id}" %>"><%= comment.place.name %></a> - <%= comment.place.location %>:<br>
-      <%= comment.content %>
+      <% if comment.place==nil %>
+        DELETED:
+      <% else %>
+        <a href= "<%= "/places/#{comment.place.id}" %>"><%= comment.place.name %></a> - <%= comment.place.location %>:
+      <% end %>
+      <br><%= comment.content %>
     </li>
     <% end %>
   </ul>
