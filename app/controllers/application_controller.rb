@@ -195,6 +195,14 @@ class ApplicationController < Sinatra::Base
   end
   
   get '/comments/:id/edit' do
+    @comment = Comment.find(params[:id])
+    if !@comment
+      redirect to '/places'
+    elsif !logged_in? || @comment.user_id != current_user.id
+      redirect to "/places/#{@comment.place.id}"
+    else
+      erb :'/comments/edit'
+    end
   end
   
   patch '/comments/:id/edit' do
