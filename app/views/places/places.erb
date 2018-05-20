@@ -1,0 +1,6 @@
+<h3>Cool places to visit:</h3>
+<ul>
+  <% @places.each do |place| %>
+    <li><%= place.name %> - <%= place.location %></li>
+  <% end %>
+</ul>

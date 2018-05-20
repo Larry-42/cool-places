@@ -70,6 +70,11 @@ class ApplicationController < Sinatra::Base
     "Successfully logged out"
   end
   
+  get '/places' do
+    @places = Place.all
+    erb :'/places/places'
+  end
+  
   get '/createplace' do
     if !logged_in?
       redirect to '/'
