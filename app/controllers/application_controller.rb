@@ -70,6 +70,11 @@ class ApplicationController < Sinatra::Base
     "Successfully logged out"
   end
   
+  get '/users/:id' do
+    @user = User.find(params[:id])
+    erb :'/users/show'
+  end
+  
   get '/places/:id' do
     @is_logged_in = logged_in?
     @place = Place.find(params[:id])

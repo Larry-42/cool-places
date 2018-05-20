@@ -1,0 +1,29 @@
+<h3><%= @user.username %></h3>
+
+<% if @user.places.empty? %>
+  <h3><%= @user.username %> has not created any places</h3>
+<% else %>
+  <h3>Places: </h3>
+  <ul>
+  <% @user.places.each do |place| %>
+    <li>
+      <a href= "<%= "/places/#{place.id}" %>"><%= place.name %></a> - <%= place.location %>
+    </li>
+  <% end %>
+  </ul>
+<% end %>
+
+<% if @user.comments.empty? %>
+  <h3><%= @user.username %> has not commented on any places</h3>
+<% else %>
+  <h3>Comments:</h3>
+    <ul>
+    <% @user.comments.each do |comment| %>
+    <li>
+      <%= @user.username %> commented on 
+      <a href= "<%= "/places/#{comment.place.id}" %>"><%= comment.place.name %></a> - <%= comment.place.location %>:<br>
+      <%= comment.content %>
+    </li>
+    <% end %>
+  </ul>
+<% end %>
