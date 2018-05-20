@@ -1,5 +1,5 @@
 <h3>Make your edits below:</h3>
-<form action = '/createplace' method = 'post'>
+<form action = "<%= "/places/#{@place.id}/edit" %>" method = 'post'>
   <input type = "hidden" name="_method" value = "patch">
   <label>Place name: </label>
   <input type="text" name="place[name]" value="<%= @place.name %>"><br>
@@ -7,5 +7,5 @@
   <input type="text" name="place[location]" value="<%= @place.location %>"><br><br>
   <label>Description: </label><br>
   <textarea name="place[content]" rows="10" cols="60"><%= @place.content %></textarea><br>
-  <input type="submit" name="submit" value="Create place">
+  <input type="submit" name="submit" value="Edit place">
 </form>

@@ -84,6 +84,10 @@ class ApplicationController < Sinatra::Base
     end
   end
   
+  patch '/places/:id/edit' do
+    binding.pry
+  end
+  
   get '/places/:id' do
     @is_logged_in = logged_in?
     @place = Place.find(params[:id])
