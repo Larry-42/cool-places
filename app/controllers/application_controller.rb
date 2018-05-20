@@ -151,6 +151,10 @@ class ApplicationController < Sinatra::Base
   
   get '/places/:id' do
     @is_logged_in = logged_in?
+    @user = nil
+    if logged_in?
+      @user = current_user
+    end
     @place = Place.find(params[:id])
     erb :'/places/show'
   end

@@ -2,6 +2,10 @@
 <h3><i><%= @place.location %></i></h3>
 <p><%= @place.content %></p>
 
+<% if @user && @place.user_id == @user.id %>
+  <a href = "<%= "/places/#{@place.id}/edit" %>"> Edit </a> | <a href = "<%= "/places/#{@place.id}/delete" %>">Delete</a>
+<% end %>
+
 <% if !@place.comments.empty? %>
   <% @place.comments.each do |comment| %>
     <p><a href = "<%= "/users/#{comment.user.id}" %>">
