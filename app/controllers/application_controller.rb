@@ -71,8 +71,12 @@ class ApplicationController < Sinatra::Base
   end
   
   get '/places/:id' do
+    @is_logged_in = logged_in?
     @place = Place.find(params[:id])
     erb :'/places/show'
+  end
+  
+  post '/places/:id/comment' do
   end
   
   get '/places' do
