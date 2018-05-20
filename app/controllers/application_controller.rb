@@ -10,6 +10,10 @@ class ApplicationController < Sinatra::Base
     !!session[:user_id]
   end
   
+  def current_user
+    User.find(session[:user_id])
+  end
+  
   get '/' do
     #TODO:  Add redirect if already logged in
     erb :index
@@ -97,11 +101,13 @@ class ApplicationController < Sinatra::Base
       redirect to '/createplace'
     end
     
-    #TODO:  Associate new place with current User
-    Place.create(params[:place])
-    
-    #TODO:  Validate to place show page
-    "Place successfully created"
+    @new_place = current_user.places.build(params[:place])
+    if @new_place.save
+      #TODO:  Validate to place show page
+      "Place successfully created"
+    else
+      redirect to '/createplace'
+    end
   end
 
 end
