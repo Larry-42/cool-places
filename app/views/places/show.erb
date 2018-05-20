@@ -1,6 +1,14 @@
 <h3><%= @place.name %></h3>
 <h3><i><%= @place.location %></i></h3>
 <p><%= @place.content %></p>
+
+<% if !@place.comments.empty? %>
+  <% @place.comments.each do |comment| %>
+    <p><%= comment.user.username %> wrote:</p>
+    <p><%= comment.content %></p>
+  <% end %>
+<% end %>
+
 <% if @is_logged_in %>
   <p>Add a comment:</p>
   <form action = "<%= "/places/#{@place.id}/comment" %>" method = "post">
