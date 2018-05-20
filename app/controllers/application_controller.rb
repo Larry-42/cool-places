@@ -59,6 +59,11 @@ class ApplicationController < Sinatra::Base
       redirect to '/signup'
     end
     
+    #Validation--Make sure that passwords match
+    if params[:user][:password] != params[:confirm]
+      redirect to '/signup'
+    end
+    
     #Validation--Make sure that username is not already taken
     if User.find_by username: params[:user][:username]
       redirect to '/signup'
