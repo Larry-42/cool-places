@@ -193,5 +193,17 @@ class ApplicationController < Sinatra::Base
       redirect to '/createplace'
     end
   end
+  
+  get '/comments/:id/edit' do
+  end
+  
+  patch '/comments/:id/edit' do
+  end
+  
+  get '/comments/:id/delete' do
+  end
+  
+  delete '/comments/:id/delete' do
+  end
 
 end
