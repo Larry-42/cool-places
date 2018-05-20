@@ -209,6 +209,14 @@ class ApplicationController < Sinatra::Base
   end
   
   get '/comments/:id/delete' do
+    @comment = Comment.find(params[:id])
+    if !@comment
+      redirect to '/places'
+    elsif !logged_in? || @comment.user_id != current_user.id
+      redirect to "/places/#{@comment.place.id}"
+    else
+      erb :'/comments/delete'
+    end
   end
   
   delete '/comments/:id/delete' do

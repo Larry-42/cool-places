@@ -1,0 +1,10 @@
+<h2>Warning!  You are about to delete the comment listed below.</h2>
+<h3>This cannot be undone.  Are you sure you want to do this?</h3>
+
+<form action = "<%= "/comments/#{@comment.id}/delete" %>" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <input type="submit" name="submit" value="Yes">
+  <input type="submit" name="submit" value="No">
+</form>
+<h3> <a href= "<%= "/places/#{@comment.place.id}" %>"><%= @comment.place.name %></a> - <%= @comment.place.location %></h3>
+<%= @comment.content %>
