@@ -125,6 +125,7 @@ class ApplicationController < Sinatra::Base
     else
       @place.name = old_place_name
       @place.location = old_place_location
+      redirect to "/places/#{params[:id]}/edit" 
     end
     redirect to "/places/#{params[:id]}" 
   end
