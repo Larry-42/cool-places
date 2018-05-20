@@ -85,9 +85,8 @@ class ApplicationController < Sinatra::Base
     if logged_in? && !params[:comment].empty? 
       Comment.create content: params[:comment], user_id: session[:user_id], place_id: params[:id]
       "Comment created"
-    else
-      "Error"
     end
+    redirect to "/places/#{params[:id]}"
   end
   
   get '/places' do
