@@ -79,18 +79,23 @@ class ApplicationController < Sinatra::Base
     if !logged_in?
       redirect to '/'
     end
-    binding.pry
+    
     #Validation:  Make sure that none of the fields are empty
     params[:place].each do |k, v|
       if v.empty?
         redirect to '/createplace'
       end
     end
+    
     #Validation:  Make sure that place is not named "deleted"
     if params[:place][:name].downcase == "deleted"
       redirect to '/createplace'
     end
-    #TOOD:  Validation:  Make sure that place does not already exist
+    
+    #Validation:  Make sure that place does not already exist
+    if Place.find_by name: params[:place][:name], location: params[:place][:location]
+      redirect to '/createplace'
+    end
     
     #TODO:  Associate new place with current User
     Place.create(params[:place])
