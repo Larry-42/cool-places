@@ -93,6 +93,10 @@ class ApplicationController < Sinatra::Base
   end
   
   get '/users/:id' do
+    @curr_user = nil
+    if logged_in?
+      @curr_user = current_user
+    end
     @user = User.find(params[:id])
     erb :'/users/show'
   end

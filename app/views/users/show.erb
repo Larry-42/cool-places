@@ -8,6 +8,9 @@
   <% @user.places.each do |place| %>
     <li>
       <a href= "<%= "/places/#{place.id}" %>"><%= place.name %></a> - <%= place.location %>
+      <% if @curr_user && @curr_user.id == @user.id %>
+        <a href = "<%= "/places/#{place.id}/edit" %>"> Edit </a> | <a href = "<%= "/places/#{place.id}/delete" %>">Delete</a>
+      <% end %>
     </li>
   <% end %>
   </ul>
