@@ -206,6 +206,18 @@ class ApplicationController < Sinatra::Base
   end
   
   patch '/comments/:id/edit' do
+    @comment = Comment.find(params[:id])
+    if !@comment
+      redirect to "/places"
+    elsif logged_in? && @comment.user_id == current_user.id
+      @comment.update(params[:comment])
+    end
+    
+    if @comment.place_id
+      redirect to "/places/#{@comment.place.id}"
+    else
+      redirect to "/places"
+    end
   end
   
   get '/comments/:id/delete' do
