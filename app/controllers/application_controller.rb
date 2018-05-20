@@ -70,6 +70,11 @@ class ApplicationController < Sinatra::Base
     "Successfully logged out"
   end
   
+  get '/places/:id' do
+    @place = Place.find(params[:id])
+    erb :'/places/show'
+  end
+  
   get '/places' do
     @places = Place.all
     erb :'/places/places'
