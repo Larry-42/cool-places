@@ -106,6 +106,15 @@ class ApplicationController < Sinatra::Base
     end
   end
   
+  get '/places/:id/delete' do
+    @place = Place.find(params[:id])
+    if @place && logged_in? && @place.user_id == current_user.id
+      erb :'/places/delete'
+    else
+      redirect to "/places/#{params[:id]}"
+    end
+  end
+  
   patch '/places/:id/edit' do
     @place = Place.find(params[:id])
     if !@place || !logged_in? || @place.id != current_user.id
