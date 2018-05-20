@@ -165,6 +165,10 @@ class ApplicationController < Sinatra::Base
   
   get '/places' do
     @places = Place.all
+    @user = nil
+    if logged_in?
+      @user = current_user
+    end
     erb :'/places/places'
   end
   
