@@ -86,6 +86,7 @@ class ApplicationController < Sinatra::Base
   
   patch '/places/:id/edit' do
     binding.pry
+    redirect to "/places/#{params[:id]}"
   end
   
   get '/places/:id' do
