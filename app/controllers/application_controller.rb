@@ -28,6 +28,11 @@ class ApplicationController < Sinatra::Base
       place_valid = false
     end
     
+    #Validation:  Make sure that place does not exist
+    if Place.find_by name: parameters[:name], location: parameters[:name]
+      place_valid = false
+    end
+    
     place_valid
   end
   
@@ -106,8 +111,20 @@ class ApplicationController < Sinatra::Base
     if !@place || !logged_in? || @place.id != current_user.id
       redirect to '/places'
     end
+    
+    #validation--see if you're trying to set the place name and location to 
+    #one that already exists!
+    old_place_name = @place.name
+    old_place_location = @place.location
+    
+    @place.name = nil
+    @place.location = nil
+    
     if place_is_valid?(params[:place])
       @place.update(params[:place])
+    else
+      @place.name = old_place_name
+      @place.location = old_place_location
     end
     redirect to "/places/#{params[:id]}" 
   end
@@ -145,12 +162,6 @@ class ApplicationController < Sinatra::Base
     end
     
     if !place_is_valid?(params[:place])
-      redirect to '/createplace'
-    end
-    
-    #Validation:  Make sure that place does not already exist.  Keep down here since can maintain
-    #same name and same location when editing!
-    if Place.find_by name: params[:place][:name], location: params[:place][:name]
       redirect to '/createplace'
     end
     
