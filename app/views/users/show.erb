@@ -30,6 +30,9 @@
         <a href= "<%= "/places/#{comment.place.id}" %>"><%= comment.place.name %></a> - <%= comment.place.location %>:
       <% end %>
       <br><%= comment.content %>
+      <% if @curr_user && @curr_user.id == @user.id %>
+        <a href = "<%= "/comments/#{comment.id}/edit" %>"> Edit </a> | <a href = "<%= "/comments/#{comment.id}/delete" %>">Delete</a>
+      <% end %>
     </li>
     <% end %>
   </ul>
