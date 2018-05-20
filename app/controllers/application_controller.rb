@@ -14,7 +14,7 @@ class ApplicationController < Sinatra::Base
     User.find(session[:user_id])
   end
   
-  def valid_place?(parameters)
+  def place_is_valid?(parameters)
     place_valid = true
     #Validation:  Make sure that none of the fields are empty
     parameters.each do |k, v|
@@ -25,11 +25,6 @@ class ApplicationController < Sinatra::Base
     
     #Validation:  Make sure that place is not named "deleted"
     if parameters[:name].downcase == "deleted"
-      place_valid = false
-    end
-    
-    #Validation:  Make sure that place does not already exist
-    if Place.find_by name: parameters[:name], location: parameters[:location]
       place_valid = false
     end
     
@@ -107,8 +102,14 @@ class ApplicationController < Sinatra::Base
   end
   
   patch '/places/:id/edit' do
-    binding.pry
-    redirect to "/places/#{params[:id]}"
+    @place = Place.find(params[:id])
+    if !@place || !logged_in? || @place.id != current_user.id
+      redirect to '/places'
+    end
+    if place_is_valid?(params[:place])
+      @place.update(params[:place])
+    end
+    redirect to "/places/#{params[:id]}" 
   end
   
   get '/places/:id' do
@@ -143,7 +144,13 @@ class ApplicationController < Sinatra::Base
       redirect to '/'
     end
     
-    if !valid_place?(params[:place])
+    if !place_is_valid?(params[:place])
+      redirect to '/createplace'
+    end
+    
+    #Validation:  Make sure that place does not already exist.  Keep down here since can maintain
+    #same name and same location when editing!
+    if Place.find_by name: params[:place][:name], location: params[:place][:name]
       redirect to '/createplace'
     end
     
