@@ -37,12 +37,16 @@ class ApplicationController < Sinatra::Base
   end
   
   get '/' do
-    #TODO:  Add redirect if already logged in
+    if logged_in?
+      redirect to '/places'
+    end
     erb :index
   end
   
   get '/signup' do
-    #TODO:  Add redirect if already logged in
+    if logged_in?
+      redirect to '/places'
+    end
     erb :signup
   end
   
@@ -70,31 +74,33 @@ class ApplicationController < Sinatra::Base
     end
   
     session[:user_id] = User.create(params[:user]).id
-    
-    #TODO: redirect to show places
-    "Successfully signed up"
+    redirect to '/places'
   end
   
   get '/login' do
-    #TODO:  Redirect if already logged in
-    erb :login
+    if logged_in?
+      redirect to '/places'
+    else
+      erb :login
+    end
   end
   
   post '/login' do
-    #TODO:  Redirect once logged in, validate if logged in
+    if logged_in?
+      redirect to "/places"
+    end
     user_login = User.find_by username: params[:username]
     if user_login && user_login.authenticate(params[:password])
       session[:user_id] = user_login.id
-      "Logged in"
+      redirect to '/places'
     else
-      "Failed to validate"
+      redirect to '/login'
     end
   end
   
   get '/logout' do
-    #TODO:  Add redirect, validate if logged in
     session.clear
-    "Successfully logged out"
+    redirect to '/'
   end
   
   get '/users/:id' do
@@ -195,8 +201,7 @@ class ApplicationController < Sinatra::Base
     
     @new_place = current_user.places.build(params[:place])
     if @new_place.save
-      #TODO:  Validate to place show page
-      "Place successfully created"
+      redirect to "/places/#{@new_place.id}"
     else
       redirect to '/createplace'
     end
