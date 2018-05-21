@@ -212,7 +212,11 @@ class ApplicationController < Sinatra::Base
     if !@comment
       redirect to '/places'
     elsif !logged_in? || @comment.user_id != current_user.id
-      redirect to "/places/#{@comment.place.id}"
+      if @comment.place
+        redirect to "/places/#{@comment.place.id}"
+      else
+        redirect to "/places"
+      end
     else
       erb :'/comments/edit'
     end
@@ -226,7 +230,7 @@ class ApplicationController < Sinatra::Base
       @comment.update(params[:comment])
     end
     
-    if @comment.place_id
+    if @comment.place
       redirect to "/places/#{@comment.place.id}"
     else
       redirect to "/places"
@@ -238,7 +242,11 @@ class ApplicationController < Sinatra::Base
     if !@comment
       redirect to '/places'
     elsif !logged_in? || @comment.user_id != current_user.id
-      redirect to "/places/#{@comment.place.id}"
+      if @comment.place
+        redirect to "/places/#{@comment.place.id}"
+      else
+        redirect to "/places"
+      end
     else
       erb :'/comments/delete'
     end
@@ -249,11 +257,19 @@ class ApplicationController < Sinatra::Base
     if !@comment
       redirect to "/places"
     elsif !logged_in? || @comment.user_id != current_user.id || params[:submit] == "No"
-      redirect to "/places/#{@comment.place.id}"
+      if @comment.place
+        redirect to "/places/#{@comment.place.id}"
+      else
+        redirect to "/places"
+      end
     else
-      place_id = @comment.place.id
+      place_id = @comment.place ? @comment.place.id : nil
       @comment.destroy
-      redirect to "/places/#{place_id}"
+      if place_id
+        redirect to "/places/#{place_id}"
+      else
+        redirect to "/places"
+      end
     end
   end
 
