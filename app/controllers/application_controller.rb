@@ -11,7 +11,7 @@ class ApplicationController < Sinatra::Base
   end
   
   def current_user
-    User.find(session[:user_id])
+    session[:user_id] ? User.find(session[:user_id]) : nil
   end
   
   def place_is_valid?(parameters)
@@ -98,10 +98,7 @@ class ApplicationController < Sinatra::Base
   end
   
   get '/users/:id' do
-    @curr_user = nil
-    if logged_in?
-      @curr_user = current_user
-    end
+    @curr_user = current_user
     @user = User.find(params[:id])
     erb :'/users/show'
   end
@@ -160,10 +157,7 @@ class ApplicationController < Sinatra::Base
   
   get '/places/:id' do
     @is_logged_in = logged_in?
-    @user = nil
-    if logged_in?
-      @user = current_user
-    end
+    @user = current_user
     @place = Place.find(params[:id])
     erb :'/places/show'
   end
@@ -178,10 +172,7 @@ class ApplicationController < Sinatra::Base
   
   get '/places' do
     @places = Place.all
-    @user = nil
-    if logged_in?
-      @user = current_user
-    end
+    @user = current_user
     erb :'/places/places'
   end
   
