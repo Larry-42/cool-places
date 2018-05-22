@@ -66,7 +66,6 @@ class CommentsController < ApplicationController
         redirect to "/places"
       end
     end
-    
-end
+  end
   
 end
