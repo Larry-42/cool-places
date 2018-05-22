@@ -94,6 +94,11 @@ class PlacesController < ApplicationController
     erb :'/places/places'
   end
   
+  #Just because I have issues when moving around manually...
+  get '/places/' do
+    redirect to '/places'
+  end
+  
   get '/createplace' do
     if !logged_in?
       redirect to '/'
