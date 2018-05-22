@@ -112,7 +112,16 @@ class ApplicationController < Sinatra::Base
   end
   
   post '/changepassword' do
-    "Posted it"
+    if logged_in?
+      if current_user.authenticate(params[:old_password]) && params[:user][:password] == params[:confirm_password] && params[:user][:password].length >= 5
+        current_user.update(params[:user])
+        redirect to "/places"
+      else
+        redirect to '/changepassword'
+      end
+    else
+      redirect to "/"
+    end
   end
   
   get '/users/:id' do
