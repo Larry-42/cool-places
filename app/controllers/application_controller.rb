@@ -103,6 +103,18 @@ class ApplicationController < Sinatra::Base
     redirect to '/'
   end
   
+  get '/changepassword' do
+    if logged_in?
+      erb :'/users/change_password'
+    else
+      redirect to "/"
+    end
+  end
+  
+  post '/changepassword' do
+    "Posted it"
+  end
+  
   get '/users/:id' do
     @curr_user = current_user
     @user = User.find(params[:id])
