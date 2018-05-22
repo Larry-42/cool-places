@@ -1,7 +1,6 @@
 class CommentsController < ApplicationController
 
-  #NOTE:  Because the route is /places/:id/comment, the code to create
-  #a comment is in comments_controller.rb
+  #NOTE:  The code to create a comment is in places_controller.rb because the route is /places/:id/comment, 
   get '/comments/:id/edit' do
     @comment = Comment.find(params[:id])
     if !@comment
