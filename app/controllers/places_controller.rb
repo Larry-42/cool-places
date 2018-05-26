@@ -56,7 +56,7 @@ class PlacesController < ApplicationController
   
   patch '/places/:id/edit' do
     @place = Place.find(params[:id])
-    if !@place || !logged_in? || @place.id != current_user.id
+    if !@place || !logged_in? || @place.user_id != current_user.id
       flash[:message] = '<p class="text-warning">You can only edit a place that you created, when logged in under the account you used to create it.</p>'
       redirect to '/places'
     end
