@@ -6,5 +6,9 @@
   <input type="submit" name="submit" value="Yes">
   <input type="submit" name="submit" value="No">
 </form>
-<h4> <a href= "<%= "/places/#{@comment.place.id}" %>"><%= @comment.place.name %></a> - <%= @comment.place.location %></h4>
+<% if @comment.place %>
+  <h4> <a href= "<%= "/places/#{@comment.place.id}" %>"><%= @comment.place.name %></a> - <%= @comment.place.location %></h4>
+<% else %>
+  <h4>Place DELETED</h4>
+<% end %>
 <%= @comment.content %>
