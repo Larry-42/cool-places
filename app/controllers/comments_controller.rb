@@ -4,8 +4,10 @@ class CommentsController < ApplicationController
   get '/comments/:id/edit' do
     @comment = Comment.find(params[:id])
     if !@comment
+      flash[:message] = '<p class="text-warning">Comment not found.</p>'
       redirect to '/places'
     elsif !logged_in? || @comment.user_id != current_user.id
+      flash[:message] = '<p class="text-warning">You can only edit a comment that you made when logged in using the same username you used to create the comment.</p>'
       if @comment.place
         redirect to "/places/#{@comment.place.id}"
       else
@@ -19,9 +21,13 @@ class CommentsController < ApplicationController
   patch '/comments/:id/edit' do
     @comment = Comment.find(params[:id])
     if !@comment
+      flash[:message] = '<p class="text-warning">Comment not found.</p>'
       redirect to "/places"
     elsif logged_in? && @comment.user_id == current_user.id
+      flash[:message] = '<p class = "text-success">Successfully updated your comment.</p>'
       @comment.update(params[:comment])
+    else
+      flash[:message] = '<p class="text-warning">You can only edit a comment that you made when logged in using the same username you used to create the comment.</p>'
     end
     
     if @comment.place
@@ -34,8 +40,10 @@ class CommentsController < ApplicationController
   get '/comments/:id/delete' do
     @comment = Comment.find(params[:id])
     if !@comment
+      flash[:message] = '<p class="text-warning">Comment not found.</p>'
       redirect to '/places'
     elsif !logged_in? || @comment.user_id != current_user.id
+      flash[:message] = '<p class="text-warning">You can only delete a comment that you made when logged in using the same username you used to create the comment.</p>'
       if @comment.place
         redirect to "/places/#{@comment.place.id}"
       else
@@ -49,8 +57,10 @@ class CommentsController < ApplicationController
   delete '/comments/:id/delete' do
     @comment = Comment.find(params[:id])
     if !@comment
+      flash[:message] = '<p class="text-warning">Comment not found.</p>'
       redirect to "/places"
     elsif !logged_in? || @comment.user_id != current_user.id || params[:submit] == "No"
+      flash[:message] = '<p class="text-info">Comment was not deleted.  As a reminder, uou can only delete a comment that you made when logged in using the same username you used to create the comment.</p>'
       if @comment.place
         redirect to "/places/#{@comment.place.id}"
       else
@@ -59,6 +69,7 @@ class CommentsController < ApplicationController
     else
       place_id = @comment.place ? @comment.place.id : nil
       @comment.destroy
+      flash[:message] = '<p class="text-success">You have successfully deleted your comment.</p>'
       if place_id
         redirect to "/places/#{place_id}"
       else
