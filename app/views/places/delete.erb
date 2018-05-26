@@ -1,5 +1,5 @@
-<h2>Warning!  You are about to delete the place listed below.</h2>
-<h3>This cannot be undone.  Are you sure you want to do this?</h3>
+<h3>Warning!  You are about to delete the place listed below.</h3>
+<h4>This cannot be undone.  Are you sure you want to do this?</h4>
 
 <form action = "<%= "/places/#{@place.id}/delete" %>" method="post">
   <input type="hidden" name="_method" value="delete">
@@ -8,8 +8,8 @@
 </form>
 
 
-<h3><%= @place.name %></h3>
-<h3><i><%= @place.location %></i></h3>
+<h4><%= @place.name %></h4>
+<h4><i><%= @place.location %></i></h4>
 <p><%= @place.content %></p>
 
 <% if !@place.comments.empty? %>
