@@ -88,16 +88,6 @@ class PlacesController < ApplicationController
     erb :'/places/show'
   end
   
-  post '/places/:id/comment' do
-    if logged_in? && !params[:comment].empty? 
-      Comment.create content: params[:comment], user_id: session[:user_id], place_id: params[:id]
-      flash[:message] = '<p class="text-success">Successfully added your comment.</p>'
-    else
-      flash[:message] = '<p class="text-warning">You must be logged in to comment, and the comment content cannot be blank.</p>'
-    end
-    redirect to "/places/#{params[:id]}"
-  end
-  
   get '/places' do
     @places = Place.all
     @user = current_user
