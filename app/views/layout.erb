@@ -23,7 +23,7 @@
             <li><a href = "/places">Places</a></li>
             <li><a href = "<%= "/users/#{current_user.id}" %>">Your content</a></li>
             <li><a href = "/createplace">Submit a new place</a></li>
-            <li><a href = "/changepassword">Change your password</a></li>
+            <li><a href = "/changepassword">Change your password</a></li>REFACTOR:  SEE IF CAN MOVE COMMENT CREATION TO COMMENTS CONTROLLER
             <li><a href = "/logout">Log out</a></li>
           <% else %>
             <li><a href = "/login">Log in</a></li>
@@ -40,7 +40,7 @@
     </div>
   <% end %>
   <div class = "container">
-    <H1>Cool Places</H1>
+    <H2>Cool Places</H2>
     <%= yield %>
   </div>
 </BODY>
