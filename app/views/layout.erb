@@ -34,6 +34,11 @@
       </div>
     </div>
   </nav>
+  <% if flash.has?(:message) %>
+    <div class= "container">
+      <%= flash[:message] %>
+    </div>
+  <% end %>
   <div class = "container">
     <H1>Cool Places</H1>
     <%= yield %>

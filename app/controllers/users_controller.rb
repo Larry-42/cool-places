@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   
   get '/' do
-    #Old page was irrelevant after adding navbar
+    #Old index page was irrelevant after adding navbar
     redirect to '/places'
   end
   

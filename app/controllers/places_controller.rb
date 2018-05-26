@@ -91,6 +91,7 @@ class PlacesController < ApplicationController
   get '/places' do
     @places = Place.all
     @user = current_user
+    flash[:message] = "Testing flash"
     erb :'/places/places'
   end
   

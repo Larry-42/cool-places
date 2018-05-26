@@ -1,9 +1,12 @@
+require 'rack-flash'
+
 class ApplicationController < Sinatra::Base
   
   configure do
     set :views, Proc.new { File.join(root, "../views/")}
     enable :sessions
     set :session_secret, "the_color_of_infinity"
+    use Rack::Flash
   end
   
   helpers do
