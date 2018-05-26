@@ -1,11 +1,17 @@
 <h3>Make your edits below:</h3>
 <form action = "<%= "/places/#{@place.id}/edit" %>" method = 'post'>
   <input type = "hidden" name="_method" value = "patch">
-  <label>Place name: </label>
-  <input type="text" name="place[name]" value="<%= @place.name %>"><br>
-  <label>Place location: </label>
-  <input type="text" name="place[location]" value="<%= @place.location %>"><br><br>
-  <label>Description: </label><br>
-  <textarea name="place[content]" rows="10" cols="60"><%= @place.content %></textarea><br>
+  <div class="form-group"
+    <label for="pn">Place name: </label>
+    <input type="text" name="place[name]" value="<%= @place.name %>" id="pn">
+  </div>
+  <div class="form-group">
+    <label for="pl">Place location: </label>
+    <input type="text" name="place[location]" value="<%= @place.location %>" id="pl">
+  </div>
+  <div class="form-group"
+    <label for="ta">Description: </label>
+    <textarea name="place[content]" rows="10" cols="60" id="ta" class="form-control"><%= @place.content %></textarea>
+  </dvi>
   <input type="submit" name="submit" value="Edit place">
 </form>
