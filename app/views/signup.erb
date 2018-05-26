@@ -1,10 +1,16 @@
 <h3>Sign up</h3>
 <form action = "/signup" method = "post">
-  <label>Desired username: </label>
-  <input type="text" name="user[username]" placeholder="Enter desired username"><br>
-  <label>Choose password (minimum length 5 characters: </label>
-  <input type="password" name="user[password]" placeholder="Choose password"><br>
-  <label>Confirm password (passwords must match): </label>
-  <input type="password" name="confirm" placeholder="Confirm password"><br>
+  <div class="form-group">
+    <label for="un">Desired username: </label>
+    <input type="text" name="user[username]" placeholder="Enter desired username" id="un">
+  </div>
+  <div class="form-group">
+    <label for="pwd">Choose password (minimum length 5 characters: </label>
+    <input type="password" name="user[password]" placeholder="Choose password" id = "pwd">
+  </div>
+  <div class="form-group">
+    <label for="pwd2">Confirm password (passwords must match): </label>
+    <input type="password" name="confirm" placeholder="Confirm password" id="pwd2">
+  </div>
   <input type="submit" name="submit" value="Sign up">
 </form>
