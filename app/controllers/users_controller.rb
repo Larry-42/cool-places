@@ -1,10 +1,8 @@
 class UsersController < ApplicationController
   
   get '/' do
-    if logged_in?
-      redirect to '/places'
-    end
-    erb :index
+    #Old page was irrelevant after adding navbar
+    redirect to '/places'
   end
   
   get '/signup' do
