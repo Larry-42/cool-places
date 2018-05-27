@@ -68,6 +68,7 @@ class PlacesController < ApplicationController
     
     @place.name = nil
     @place.location = nil
+    @place.save
     
     if place_is_valid?(params[:place])
       @place.update(params[:place])
@@ -75,6 +76,7 @@ class PlacesController < ApplicationController
     else
       @place.name = old_place_name
       @place.location = old_place_location
+      @place.save
       flash[:message] = '<p class="text-warning">Place is invalid.  You cannot have blank fields, duplicate an existing place, or name a place "Deleted"</p>'
       redirect to "/places/#{params[:id]}/edit" 
     end
