@@ -32,7 +32,7 @@ class CommentsController < ApplicationController
     if !@comment
       flash[:message] = '<p class="text-warning">Comment not found.</p>'
       redirect to "/places"
-    elsif logged_in? && @comment.user_id == current_user.id &&! params[:comment].empty?
+    elsif logged_in? && @comment.user_id == current_user.id && !params[:comment].empty?
       flash[:message] = '<p class = "text-success">Successfully updated your comment.</p>'
       @comment.update(params[:comment])
     else
