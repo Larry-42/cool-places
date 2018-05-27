@@ -15,7 +15,7 @@ class PlacesController < ApplicationController
     end
     
     #Validation:  Make sure that place does not exist
-    if Place.find_by name: parameters[:name], location: parameters[:name]
+    if Place.find_by name: parameters[:name], location: parameters[:location]
       place_valid = false
     end
     
