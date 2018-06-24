@@ -1,7 +1,9 @@
 class PlacesController < ApplicationController
-  
+
   def place_is_valid?(parameters)
-    !(parameters.select {|k, v| v.empty?} || parameters[:name].downcase == "deleted" || Place.find_by(name: parameters[:name], location: parameters[:location]))
+    !(parameters.select {|k, v| v.empty?} \
+    || parameters[:name].downcase == "deleted" \
+    || Place.find_by(name: parameters[:name], location: parameters[:location]))
   end
 
   get '/places/:id/edit' do
@@ -13,7 +15,7 @@ class PlacesController < ApplicationController
       redirect to "/places/#{params[:id]}"
     end
   end
-  
+
   get '/places/:id/delete' do
     @place = Place.find(params[:id])
     if @place && logged_in? && @place.user_id == current_user.id
@@ -23,7 +25,7 @@ class PlacesController < ApplicationController
       redirect to "/places/#{params[:id]}"
     end
   end
-  
+
   delete '/places/:id/delete' do
     @place = Place.find(params[:id])
     if !@place || !logged_in? || @place.user_id != current_user.id || params[:submit] == "No"
@@ -35,23 +37,23 @@ class PlacesController < ApplicationController
       redirect to "/places"
     end
   end
-  
+
   patch '/places/:id/edit' do
     @place = Place.find(params[:id])
     if !@place || !logged_in? || @place.user_id != current_user.id
       flash[:message] = '<p class="text-warning">You can only edit a place that you created, when logged in under the account you used to create it.</p>'
       redirect to '/places'
     end
-    
-    #validation--see if you're trying to set the place name and location to 
+
+    #validation--see if you're trying to set the place name and location to
     #one that already exists!
     old_place_name = @place.name
     old_place_location = @place.location
-    
+
     @place.name = nil
     @place.location = nil
     @place.save
-    
+
     if place_is_valid?(params[:place])
       @place.update(params[:place])
       flash[:message] = '<p class="text-success">Successfully updated your place.</p>'
@@ -60,49 +62,49 @@ class PlacesController < ApplicationController
       @place.location = old_place_location
       @place.save
       flash[:message] = '<p class="text-warning">Place is invalid.  You cannot have blank fields, duplicate an existing place, or name a place "Deleted"</p>'
-      redirect to "/places/#{params[:id]}/edit" 
+      redirect to "/places/#{params[:id]}/edit"
     end
-    redirect to "/places/#{params[:id]}" 
+    redirect to "/places/#{params[:id]}"
   end
-  
+
   get '/places/:id' do
     @is_logged_in = logged_in?
     @user = current_user
     @place = Place.find(params[:id])
     erb :'/places/show'
   end
-  
+
   get '/places' do
     @places = Place.all
     @user = current_user
     erb :'/places/places'
   end
-  
+
   #Just because I have issues when moving around manually...
   get '/places/' do
     redirect to '/places'
   end
-  
+
   get '/createplace' do
     if !logged_in?
       flash[:message] = '<p class="text-warning">You need to be logged in to share a new place.</p>'
       redirect to '/places'
     end
-    
+
     erb :'/places/create'
   end
-  
+
   post '/createplace' do
     if !logged_in?
       flash[:message] = '<p class="text-warning">You need to be logged in to share a new place.</p>'
       redirect to '/places'
     end
-    
+
     if !place_is_valid?(params[:place])
       flash[:message] = '<p class="text-warning">Place is invalid.  You cannot have blank fields, duplicate an existing place, or name a place "Deleted"</p>'
       redirect to '/createplace'
     end
-    
+
     @new_place = current_user.places.build(params[:place])
     if @new_place.save
       flash[:message] = '<p class="text-success">Successfully shared your new place.</p>'
