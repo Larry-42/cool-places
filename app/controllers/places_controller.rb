@@ -1,25 +1,7 @@
 class PlacesController < ApplicationController
   
   def place_is_valid?(parameters)
-    place_valid = true
-    #Validation:  Make sure that none of the fields are empty
-    parameters.each do |k, v|
-      if v.empty?
-        place_valid = false
-      end
-    end
-    
-    #Validation:  Make sure that place is not named "deleted"
-    if parameters[:name].downcase == "deleted"
-      place_valid = false
-    end
-    
-    #Validation:  Make sure that place does not exist
-    if Place.find_by name: parameters[:name], location: parameters[:location]
-      place_valid = false
-    end
-    
-    place_valid
+    !(parameters.select {|k, v| v.empty?} || parameters[:name].downcase == "deleted" || Place.find_by(name: parameters[:name], location: parameters[:location]))
   end
 
   get '/places/:id/edit' do
