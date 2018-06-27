@@ -1,7 +1,8 @@
 class PlacesController < ApplicationController
 
   def place_is_valid?(parameters)
-    !(parameters.select {|k, v| v.empty?} \
+    #binding.pry
+    !(!parameters.select {|k, v| v.empty?}.empty? \
     || parameters[:name].downcase == "deleted" \
     || Place.find_by(name: parameters[:name], location: parameters[:location]))
   end
